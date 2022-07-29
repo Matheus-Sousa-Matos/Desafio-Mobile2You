@@ -25,6 +25,18 @@ struct DetailMovieView: View {
                 .padding(.trailing, 2)
             }
         }
+        .onAppear{
+            Service.shared.fetchMovieDetail { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case let .failure(error):
+                        print(error)
+                    case let .success(data):
+                        print(data)
+                    }
+                }
+            }
+        }
     }
 }
 
