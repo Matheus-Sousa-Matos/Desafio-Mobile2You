@@ -11,9 +11,9 @@ struct DetailMovieView: View {
     var body: some View {
         ZStack {
             Background()
-            VStack(spacing: 2) {
+            VStack(alignment: .leading, spacing: 10) {
                 CoverImage()
-                VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 10){
                     Details()
                     ScrollView(showsIndicators: false) {
                         ForEach(0..<4) { item in
@@ -21,8 +21,8 @@ struct DetailMovieView: View {
                         }
                     }
                 }
-                .frame(width: UIScreen.main.bounds.width)
-                Spacer()
+                .padding(.leading, 2)
+                .padding(.trailing, 2)
             }
         }
     }
@@ -39,17 +39,19 @@ struct Background: View {
 
 struct CoverImage: View {
     var body: some View {
-        ZStack(alignment: .top) {
+        ZStack {
             Image("cover")
                 .resizable()
                 .scaledToFill()
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.5, alignment: .top)
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.43)
                 .edgesIgnoringSafeArea([.top, .leading, .trailing])
         }
     }
 }
 
 struct Details: View {
+    @State var favorited = true
+    
     var body: some View {
         HStack(alignment:.top, spacing: 80) {
             Text("The Very Best Of Jonhnny Depp")
@@ -58,12 +60,13 @@ struct Details: View {
                     .bold()
                 )
                 .foregroundColor(.white)
-                .padding(.trailing, 35)
-           
+                .padding(.trailing, 60)
+            
             Button {
                 print("Tapped Heart Button")
+                favorited.toggle()
             } label: {
-                Image(systemName: "heart.fill")
+                Image(systemName: !favorited ? "heart" : "heart.fill")
                     .foregroundColor(.white)
             }
         }
@@ -92,7 +95,7 @@ struct Details: View {
 
 struct Card: View{
     var body: some View{
-        HStack(alignment: .center) {
+        HStack(alignment: .center, spacing: 15) {
             Image("cover")
                 .resizable()
                 .frame(width: 70, height: 90)
