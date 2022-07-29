@@ -11,12 +11,17 @@ struct DetailMovieView: View {
     var body: some View {
         ZStack {
             Background()
-            VStack {
+            VStack(spacing: 2) {
                 CoverImage()
-                Spacer()
                 VStack(alignment: .leading, spacing: 10) {
                     Details()
+                    ScrollView(showsIndicators: false) {
+                        ForEach(0..<4) { item in
+                            Card()
+                        }
+                    }
                 }
+                .frame(width: UIScreen.main.bounds.width)
                 Spacer()
             }
         }
@@ -38,7 +43,7 @@ struct CoverImage: View {
             Image("cover")
                 .resizable()
                 .scaledToFill()
-                .frame(width: UIScreen.main.bounds.width, height: 250, alignment: .top)
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.5, alignment: .top)
                 .edgesIgnoringSafeArea([.top, .leading, .trailing])
         }
     }
@@ -53,6 +58,7 @@ struct Details: View {
                     .bold()
                 )
                 .foregroundColor(.white)
+                .padding(.trailing, 35)
            
             Button {
                 print("Tapped Heart Button")
@@ -64,7 +70,8 @@ struct Details: View {
         HStack {
             Label {
                 Text("1.2K Likes")
-                    .foregroundColor(.white)
+                    .font(.caption)
+                    .foregroundColor(Color(UIColor.lightGray))
             } icon: {
                 Image(systemName: "heart.fill")
                     .foregroundColor(Color.white)
@@ -72,13 +79,42 @@ struct Details: View {
 
             Label {
                 Text("3 of 10 Watched")
-                    .foregroundColor(.white)
-
+                    .font(.caption)
+                    .foregroundColor(Color(UIColor.lightGray))
             } icon: {
                 Image(systemName: "sleep")
                     .foregroundColor(.white)
             }
             .padding(.leading, 20)
+        }
+    }
+}
+
+struct Card: View{
+    var body: some View{
+        HStack(alignment: .center) {
+            Image("cover")
+                .resizable()
+                .frame(width: 70, height: 90)
+            
+            VStack(alignment: .leading) {
+                Text("Edward Scissorhands")
+                    .foregroundColor(.white)
+                HStack {
+                    Text("1990")
+                        .font(.caption)
+                        .foregroundColor(.white)
+                    Text("Drama, Fantasy")
+                        .font(.caption)
+                        .foregroundColor(Color(UIColor.lightGray))
+                }
+            }
+            
+            Spacer()
+            
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundColor(.white)
+                .padding(.bottom, 50)
         }
     }
 }
