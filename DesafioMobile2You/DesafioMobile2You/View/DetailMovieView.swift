@@ -25,6 +25,18 @@ struct DetailMovieView: View {
                 .padding(.trailing, 2)
             }
         }
+        .onAppear{
+            Service.shared.getMovieDetail { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case let .failure(error):
+                        print(error)
+                    case let .success(data):
+                        print(data)
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -38,9 +50,11 @@ struct Background: View {
 }
 
 struct CoverImage: View {
+    @EnvironmentObject var viewModel: DetailViewModel
+    
     var body: some View {
         ZStack {
-            Image("cover")
+            Image(viewModel.imageSection)
                 .resizable()
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.43)
@@ -50,11 +64,12 @@ struct CoverImage: View {
 }
 
 struct Details: View {
+    @EnvironmentObject var viewModel: DetailViewModel
     @State var favorited = true
     
     var body: some View {
         HStack(alignment:.top, spacing: 80) {
-            Text("The Very Best Of Jonhnny Depp")
+            Text(viewModel.titleSection)
                 .font(
                     .title
                     .bold()
@@ -72,7 +87,7 @@ struct Details: View {
         }
         HStack {
             Label {
-                Text("1.2K Likes")
+                Text(viewModel.​voteCount)
                     .font(.caption)
                     .foregroundColor(Color(UIColor.lightGray))
             } icon: {
@@ -81,7 +96,7 @@ struct Details: View {
             }
 
             Label {
-                Text("3 of 10 Watched")
+                Text(viewModel.popularity)
                     .font(.caption)
                     .foregroundColor(Color(UIColor.lightGray))
             } icon: {
@@ -94,20 +109,22 @@ struct Details: View {
 }
 
 struct Card: View{
+    @EnvironmentObject var viewModel: DetailViewModel
+    
     var body: some View{
         HStack(alignment: .center, spacing: 15) {
-            Image("cover")
+            Image(viewModel.imageMovie)
                 .resizable()
                 .frame(width: 70, height: 90)
             
             VStack(alignment: .leading) {
-                Text("Edward Scissorhands")
+                Text(viewModel.titleMovie)
                     .foregroundColor(.white)
                 HStack {
-                    Text("1990")
+                    Text(viewModel.data)
                         .font(.caption)
                         .foregroundColor(.white)
-                    Text("Drama, Fantasy")
+                    Text(viewModel.gender)
                         .font(.caption)
                         .foregroundColor(Color(UIColor.lightGray))
                 }

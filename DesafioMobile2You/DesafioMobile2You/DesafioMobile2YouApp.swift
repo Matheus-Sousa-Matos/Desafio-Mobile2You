@@ -12,6 +12,7 @@ struct DesafioMobile2YouApp: App {
     var body: some Scene {
         WindowGroup {
             DetailMovieView()
+                .environmentObject(DetailViewModel())
         }
     }
 }
