@@ -11,7 +11,7 @@ class DetailMovieViewModel: ObservableObject {
     var movie = Movie()
     private var imgPath: String = "cover"
     
-    @Published var similarMovies: [SimilarMovie] = []
+    var similarMovies: [SimilarMovie] = []
     
     @Published var imgURLMovie: String = "https://image.tmdb.org/t/p/w300"
     @Published var titleMovie: String = "The Very Best Of Jonhnny Depp"
@@ -20,12 +20,9 @@ class DetailMovieViewModel: ObservableObject {
     
     //MARK: - Buttons
     @Published var favorited: Bool = false
-    
-    //MARK: - Card
-    @Published var imageSimilarMovie: String = "cover"
-    @Published var titleSimilarMovie: String = "Edward Scissorhands"
-    @Published var data: String = "1990"
     @Published var gender: String = "Drama, Fantasy"
+    @Published var imgURLSimilarMovie: String = "https://image.tmdb.org/t/p/w300"
+
 
     //MARK: - Image Formatter  [Base Url + size + path]
     //https://image.tmdb.org/t/p/w300/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg

@@ -22,7 +22,9 @@ struct DetailMovieView: View {
                     VStack(alignment: .leading, spacing: 10){
                         Details()
                         ForEach(viewModel.similarMovies, id: \.self) { similarMovie in
-                            Text(similarMovie.title ?? "")
+                            //Text(similarMovie.title ?? "")
+                              //  .foregroundColor(Color.white)
+                            Card(similarMovie: similarMovie)
                         }
                         
                     }
@@ -130,15 +132,13 @@ struct Card: View{
     
     var body: some View{
         HStack(alignment: .center, spacing: 15) {
-            Image("cover")
-                .resizable()
-                .frame(width: 70, height: 90)
+            CardImage(pathImage: similarMovie.posterPath ?? "")
             
             VStack(alignment: .leading) {
-                Text("title")
+                Text(similarMovie.title ?? "")
                     .foregroundColor(.white)
                 HStack {
-                    Text("1990")
+                    Text(similarMovie.releaseDate ?? "")
                         .font(.caption)
                         .foregroundColor(.white)
                     Text("Romance")
@@ -153,5 +153,42 @@ struct Card: View{
                 .foregroundColor(.white)
                 .padding(.bottom, 50)
         }
+        
+       
     }
+}
+
+struct CardImage: View{
+    @EnvironmentObject var viewModel: DetailMovieViewModel
+    @State var pathImage: String
+    @State var data: Data?
+    
+    var body: some View{
+        if let data = data, let uiImage = UIImage(data: data){
+            Image(uiImage: uiImage)
+                .resizable()
+                .frame(width: 70, height: 90)
+        }else{
+            Image("cover")
+                .resizable()
+                .frame(width: 70, height: 90)
+                .onAppear {
+                    DispatchQueue.main.async {
+                        viewModel.imgURLSimilarMovie = "https://image.tmdb.org/t/p/w300" + pathImage
+                        fetchData()
+                    }
+                }
+        }
+    }
+    
+    private func fetchData(){
+        guard let url = URL(string: viewModel.imgURLSimilarMovie) else{
+            return
+        }
+        let task = URLSession.shared.dataTask(with: url) { data, _, _ in
+            self.data = data
+        }
+        task.resume()
+    }
+    
 }
