@@ -14,9 +14,15 @@ class Service {
     
     static let shared = Service()
     private let APIKey = "e83c363f0e18ccc591a2bbb0dbd92261"
+    private let baseURL = "https://api.themoviedb.org/3/movie/550"
+    
+    //MARK: - URLs
+    //Note: 550 is static movie case change movie use var value or pass another value. Ex: 501
+    //https://api.themoviedb.org/3/movie/550?api_key=e83c363f0e18ccc591a2bbb0dbd92261&language=en-US
+    //https://api.themoviedb.org/3/movie/550x/similar?api_key=e83c363f0e18ccc591a2bbb0dbd92261&language=en-US&page=1
     
     func getMovieDetail(callback: @escaping (Result<Movie, ServiceError>) -> ()) {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/550?api_key=\(APIKey)&language=en-US") else {
+        guard let url = URL(string: "\(baseURL)?api_key=\(APIKey)&language=en-US") else {
             callback(.failure(.invalidURL))
             return
         }
@@ -36,4 +42,28 @@ class Service {
         }
         task.resume()
     }
+    
+    func getSimilarMovies(callback: @escaping (Result<Any, ServiceError>) -> ()) {
+        guard let url = URL(string: "\(baseURL)x/similar?api_key=\(APIKey)&language=en-US&page=1") else {
+            callback(.failure(.invalidURL))
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            
+            guard let data = data else {
+                callback(.failure(.newtowrk(error)))
+                return
+            }
+            do {
+                //let similarMovies = try JSONDecoder().decode(Movie.self, from: data)
+                let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                callback(.success(json))
+            } catch {
+                callback(.failure(.decodeFail(error)))
+            }
+        }
+        task.resume()
+    }
+    
 }

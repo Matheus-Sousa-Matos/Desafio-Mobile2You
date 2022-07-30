@@ -44,9 +44,8 @@ struct Background: View {
 }
 
 struct CoverImage: View{
-    @State var data: Data?
     @EnvironmentObject var viewModel: DetailMovieViewModel
-
+    @State var data: Data?
     
     var body: some View{
         if let data = data, let uiImage = UIImage(data: data){
@@ -68,7 +67,7 @@ struct CoverImage: View{
     }
     
     private func fetchData(){
-        guard let url = URL(string: viewModel.imgURL) else{
+        guard let url = URL(string: viewModel.imgURLMovie) else{
             return
         }
         let task = URLSession.shared.dataTask(with: url) { data, _, _ in
@@ -81,11 +80,10 @@ struct CoverImage: View{
 
 struct Details: View {
     @EnvironmentObject var viewModel: DetailMovieViewModel
-    @State var favorited = true
     
     var body: some View {
         HStack(alignment:.top, spacing: 80) {
-            Text(viewModel.titleSection)
+            Text(viewModel.titleMovie)
                 .font(
                     .title
                     .bold()
@@ -94,10 +92,9 @@ struct Details: View {
                 .padding(.trailing, 60)
             
             Button {
-                print("Tapped Heart Button")
-                favorited.toggle()
+                viewModel.favorited.toggle()
             } label: {
-                Image(systemName: !favorited ? "heart" : "heart.fill")
+                Image(systemName: viewModel.favorited ? "heart.fill" : "heart")
                     .foregroundColor(.white)
             }
         }
@@ -132,12 +129,12 @@ struct Card: View{
     
     var body: some View{
         HStack(alignment: .center, spacing: 15) {
-            Image(viewModel.imageMovie)
+            Image(viewModel.imageSimilarMovie)
                 .resizable()
                 .frame(width: 70, height: 90)
             
             VStack(alignment: .leading) {
-                Text(viewModel.titleMovie)
+                Text(viewModel.titleSimilarMovie)
                     .foregroundColor(.white)
                 HStack {
                     Text(viewModel.data)

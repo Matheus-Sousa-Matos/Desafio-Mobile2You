@@ -10,8 +10,6 @@ import Foundation
 //MARK: - Data
 struct Movie: Codable, Identifiable{
     var id: Int?
-    var imdbId: String?
-    var originalTitle: String?
     var popularity: Double?
     var posterPath: String?
     var releaseDate: String?
@@ -20,8 +18,6 @@ struct Movie: Codable, Identifiable{
     
     enum CodingKeys: String, CodingKey{
         case id
-        case imdbId = "imdb_id"
-        case originalTitle = "original_title"
         case popularity
         case posterPath = "poster_path"
         case releaseDate = "release_date"
