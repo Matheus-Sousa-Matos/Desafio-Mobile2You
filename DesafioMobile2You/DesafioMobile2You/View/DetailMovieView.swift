@@ -7,23 +7,28 @@
 
 import SwiftUI
 
+let widthScreen = UIScreen.main.bounds.width
+let heightScreen = UIScreen.main.bounds.height
+
 struct DetailMovieView: View {
     var body: some View {
         ZStack {
             Background()
-            VStack(alignment: .leading, spacing: 10) {
-                CoverImage()
-                VStack(alignment: .leading, spacing: 10){
-                    Details()
-                    ScrollView(showsIndicators: false) {
-                        ForEach(0..<4) { item in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 10) {
+                    CoverImage()
+                    VStack(alignment: .leading, spacing: 10){
+                        Details()
+                        ForEach(0..<10) { item in
                             Card()
                         }
                     }
+                    .padding(.leading, 2)
+                    .padding(.trailing, 2)
                 }
-                .padding(.leading, 2)
-                .padding(.trailing, 2)
             }
+            .ignoresSafeArea()
+           
         }
         .onAppear{
             Service.shared.getMovieDetail { result in
@@ -50,21 +55,20 @@ struct Background: View {
 }
 
 struct CoverImage: View {
-    @EnvironmentObject var viewModel: DetailViewModel
+    @EnvironmentObject var viewModel: DetailMovieViewModel
     
     var body: some View {
         ZStack {
             Image(viewModel.imageSection)
                 .resizable()
-                .scaledToFill()
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.43)
+                .frame(width: widthScreen, height: heightScreen*0.45)
                 .edgesIgnoringSafeArea([.top, .leading, .trailing])
         }
     }
 }
 
 struct Details: View {
-    @EnvironmentObject var viewModel: DetailViewModel
+    @EnvironmentObject var viewModel: DetailMovieViewModel
     @State var favorited = true
     
     var body: some View {
@@ -109,7 +113,7 @@ struct Details: View {
 }
 
 struct Card: View{
-    @EnvironmentObject var viewModel: DetailViewModel
+    @EnvironmentObject var viewModel: DetailMovieViewModel
     
     var body: some View{
         HStack(alignment: .center, spacing: 15) {

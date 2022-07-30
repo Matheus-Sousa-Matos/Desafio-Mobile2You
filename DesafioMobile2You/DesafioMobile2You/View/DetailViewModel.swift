@@ -9,7 +9,7 @@ import Foundation
 
 let APIKey = "e83c363f0e18ccc591a2bbb0dbd92261"
 
-@MainActor class DetailViewModel: ObservableObject {
+@MainActor class DetailMovieViewModel: ObservableObject {
     //MARK: - Top Details
     @Published var favorited: Bool = false
     @Published var imageSection: String = "cover"
