@@ -13,8 +13,9 @@ import Foundation
 class Service {
     
     static let shared = Service()
+    private let APIKey = "e83c363f0e18ccc591a2bbb0dbd92261"
     
-    func getMovieDetail(callback: @escaping (Result<Any, ServiceError>) -> ()) {
+    func getMovieDetail(callback: @escaping (Result<Movie, ServiceError>) -> ()) {
         guard let url = URL(string: "https://api.themoviedb.org/3/movie/550?api_key=\(APIKey)&language=en-US") else {
             callback(.failure(.invalidURL))
             return

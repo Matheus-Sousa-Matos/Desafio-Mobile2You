@@ -11,6 +11,8 @@ let widthScreen = UIScreen.main.bounds.width
 let heightScreen = UIScreen.main.bounds.height
 
 struct DetailMovieView: View {
+    @EnvironmentObject var viewModel: DetailMovieViewModel
+
     var body: some View {
         ZStack {
             Background()
@@ -28,19 +30,6 @@ struct DetailMovieView: View {
                 }
             }
             .ignoresSafeArea()
-           
-        }
-        .onAppear{
-            Service.shared.getMovieDetail { result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case let .failure(error):
-                        print(error)
-                    case let .success(data):
-                        print(data)
-                    }
-                }
-            }
         }
     }
 }
@@ -54,17 +43,40 @@ struct Background: View {
     }
 }
 
-struct CoverImage: View {
+struct CoverImage: View{
+    @State var data: Data?
     @EnvironmentObject var viewModel: DetailMovieViewModel
+
     
-    var body: some View {
-        ZStack {
-            Image(viewModel.imageSection)
+    var body: some View{
+        if let data = data, let uiImage = UIImage(data: data){
+            Image(uiImage: uiImage)
                 .resizable()
                 .frame(width: widthScreen, height: heightScreen*0.45)
                 .edgesIgnoringSafeArea([.top, .leading, .trailing])
+        }else{
+            Image("cover")
+                .resizable()
+                .frame(width: widthScreen, height: heightScreen*0.45)
+                .edgesIgnoringSafeArea([.top, .leading, .trailing])
+                .onAppear {
+                    DispatchQueue.main.async {
+                        fetchData()
+                    }
+                }
         }
     }
+    
+    private func fetchData(){
+        guard let url = URL(string: viewModel.imgURL) else{
+            return
+        }
+        let task = URLSession.shared.dataTask(with: url) { data, _, _ in
+            self.data = data
+        }
+        task.resume()
+    }
+    
 }
 
 struct Details: View {
@@ -89,9 +101,10 @@ struct Details: View {
                     .foregroundColor(.white)
             }
         }
+        
         HStack {
             Label {
-                Text(viewModel.​voteCount)
+                Text("\(viewModel.​voteCount) Likes")
                     .font(.caption)
                     .foregroundColor(Color(UIColor.lightGray))
             } icon: {
@@ -99,8 +112,10 @@ struct Details: View {
                     .foregroundColor(Color.white)
             }
 
+            //Substituir o 32 pela quantidade de filmes similares...
+            
             Label {
-                Text(viewModel.popularity)
+                Text("\(viewModel.popularity) of 32 Watched")
                     .font(.caption)
                     .foregroundColor(Color(UIColor.lightGray))
             } icon: {
