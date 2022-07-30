@@ -26,7 +26,7 @@ struct DetailMovieView: View {
             }
         }
         .onAppear{
-            Service.shared.fetchMovieDetail { result in
+            Service.shared.getMovieDetail { result in
                 DispatchQueue.main.async {
                     switch result {
                     case let .failure(error):
