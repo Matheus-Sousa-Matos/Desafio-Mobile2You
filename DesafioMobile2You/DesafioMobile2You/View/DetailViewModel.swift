@@ -9,18 +9,6 @@ import Foundation
 
 let APIKey = "e83c363f0e18ccc591a2bbb0dbd92261"
 
-//MARK: - Data
-struct MovieDetail: Codable, Identifiable{
-    var id: Int?
-    var imdb_id: String?
-    var original_title: String?
-    var popularity: Double?
-    var poster_path: String?
-    var release_date: String?
-    var title: String?
-    var vote_count: Int?
-}
-
 @MainActor class DetailViewModel: ObservableObject {
     //MARK: - Top Details
     @Published var favorited: Bool = false
@@ -35,34 +23,10 @@ struct MovieDetail: Codable, Identifiable{
     @Published var data: String = "1990"
     @Published var gender: String = "Drama, Fantasy"
 
-    
-}
-
-class Service {
-    
-    static let shared = Service()
-    
-    func fetchMovieDetail(callback: @escaping (Result<Any, ServiceError>) -> ()) {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/550?api_key=\(APIKey)&language=en-US") else {
-            callback(.failure(.invalidURL))
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            
-            guard let data = data else {
-                callback(.failure(.newtowrk(error)))
-                return
-            }
-            
-            let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
-            callback(.success(json))
-                
-        }
-        task.resume()
+    func fetchMovieDetail(){
         
     }
     
+    
+    
 }
-
-

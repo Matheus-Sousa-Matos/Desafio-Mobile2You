@@ -7,5 +7,6 @@
 
 enum ServiceError: Error{
     case invalidURL
+    case decodeFail(Error?)
     case newtowrk(Error?)
 }
