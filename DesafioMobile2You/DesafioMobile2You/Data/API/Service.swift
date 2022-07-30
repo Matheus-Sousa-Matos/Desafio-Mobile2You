@@ -43,7 +43,7 @@ class Service {
         task.resume()
     }
     
-    func getSimilarMovies(callback: @escaping (Result<Any, ServiceError>) -> ()) {
+    func getSimilarMovies(callback: @escaping (Result<ResultSimilarMovie, ServiceError>) -> ()) {
         guard let url = URL(string: "\(baseURL)x/similar?api_key=\(APIKey)&language=en-US&page=1") else {
             callback(.failure(.invalidURL))
             return
@@ -56,9 +56,8 @@ class Service {
                 return
             }
             do {
-                //let similarMovies = try JSONDecoder().decode(Movie.self, from: data)
-                let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                callback(.success(json))
+                let responseSimilarMovies = try JSONDecoder().decode(ResultSimilarMovie.self, from: data)
+                callback(.success(responseSimilarMovies))
             } catch {
                 callback(.failure(.decodeFail(error)))
             }

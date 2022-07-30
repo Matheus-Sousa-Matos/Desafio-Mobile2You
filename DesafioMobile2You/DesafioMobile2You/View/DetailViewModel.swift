@@ -11,6 +11,8 @@ class DetailMovieViewModel: ObservableObject {
     var movie = Movie()
     private var imgPath: String = "cover"
     
+    @Published var similarMovies: [SimilarMovie] = []
+    
     @Published var imgURLMovie: String = "https://image.tmdb.org/t/p/w300"
     @Published var titleMovie: String = "The Very Best Of Jonhnny Depp"
     @Published var ​voteCount: Int = 0
@@ -68,7 +70,7 @@ class DetailMovieViewModel: ObservableObject {
                 case let .success(data):
                     print(data)
                     do{
-                        
+                        self.similarMovies = try movies.get().results
                     }catch{
                         print(error.localizedDescription)
                     }

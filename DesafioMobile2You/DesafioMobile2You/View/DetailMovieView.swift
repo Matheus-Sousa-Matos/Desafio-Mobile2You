@@ -21,9 +21,10 @@ struct DetailMovieView: View {
                     CoverImage()
                     VStack(alignment: .leading, spacing: 10){
                         Details()
-                        ForEach(0..<10) { item in
-                            Card()
+                        ForEach(viewModel.similarMovies, id: \.self) { similarMovie in
+                            Text(similarMovie.title ?? "")
                         }
+                        
                     }
                     .padding(.leading, 2)
                     .padding(.trailing, 2)
@@ -125,22 +126,22 @@ struct Details: View {
 }
 
 struct Card: View{
-    @EnvironmentObject var viewModel: DetailMovieViewModel
+    var similarMovie: SimilarMovie
     
     var body: some View{
         HStack(alignment: .center, spacing: 15) {
-            Image(viewModel.imageSimilarMovie)
+            Image("cover")
                 .resizable()
                 .frame(width: 70, height: 90)
             
             VStack(alignment: .leading) {
-                Text(viewModel.titleSimilarMovie)
+                Text("title")
                     .foregroundColor(.white)
                 HStack {
-                    Text(viewModel.data)
+                    Text("1990")
                         .font(.caption)
                         .foregroundColor(.white)
-                    Text(viewModel.gender)
+                    Text("Romance")
                         .font(.caption)
                         .foregroundColor(Color(UIColor.lightGray))
                 }
