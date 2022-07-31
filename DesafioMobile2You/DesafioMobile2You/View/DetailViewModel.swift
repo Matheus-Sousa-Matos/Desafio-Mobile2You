@@ -37,12 +37,10 @@ class DetailMovieViewModel: ObservableObject {
                     print(data)
                     do {
                         self.movie =  try result.get()
-                        //MARK: - Image
+                        //MARK: - Formatter url image
                         self.imgPath = try result.get().posterPath!
                         self.imgURLMovie = self.imgURLMovie + self.imgPath
-                        
                         self.movies.append(self.movie)
-                        
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -60,13 +58,10 @@ class DetailMovieViewModel: ObservableObject {
                 case let .success(data):
                     print(data)
                     do {
-                        //Pegar somente o id...
                         self.similarMovies = try movies.get().results
-                        
                         for similarMovie in self.similarMovies {
                             self.fetchMovieDetail(idMovie: similarMovie.id ?? 0)
                         }
-                        
                     } catch {
                         print(error.localizedDescription)
                     }

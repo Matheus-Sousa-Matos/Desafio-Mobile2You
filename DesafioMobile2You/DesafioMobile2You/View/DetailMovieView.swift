@@ -91,6 +91,7 @@ struct Details: View {
                 viewModel.favorited.toggle()
             } label: {
                 Image(systemName: viewModel.favorited ? "heart.fill" : "heart")
+                    .font(.title2)
                     .foregroundColor(.white)
             }
         }
@@ -110,7 +111,7 @@ struct Details: View {
                     .font(.caption)
                     .foregroundColor(Color(UIColor.lightGray))
             } icon: {
-                Image(systemName: "sleep")
+                Image(systemName: "person.3.fill")
                     .foregroundColor(.white)
             }
             .padding(.leading, 20)
