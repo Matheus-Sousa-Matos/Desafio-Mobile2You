@@ -91,38 +91,5 @@ class DetailMovieViewModel: ObservableObject {
             }
         }
     }
-
-//    func fetchMovieDetailGenres(currentMovieId: Int){
-//        Service.shared.getMovieDetail(idMovie: currentMovieId) { result in
-//            DispatchQueue.main.async {
-//                switch result {
-//                case let .failure(error):
-//                    print(error)
-//                case let .success(data):
-//                    print(data)
-//                    do {
-//
-//                        if try result.get().genres?.count != 0 {
-//                            let genre1 = try result.get().genres![0].name
-//                            self.concat = genre1
-//                            if try result.get().genres!.count > 1 {
-//                                let genre2 = try result.get().genres![1].name
-//                                self.concat = genre1 + genre2
-//                            }
-//                        }
-//                        self.genres.append(self.concat)
-//
-//                        for genres in self.genres{
-//                            print("GENRESSSS:   \(genres) ")
-//                        }
-//
-//
-//                    } catch {
-//                        print(error.localizedDescription)
-//                    }
-//                }
-//            }
-//        }
-//    }
     
 }
