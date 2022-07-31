@@ -7,18 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB340FD928956FF00001ACDB /* SimilarMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB340FD828956FF00001ACDB /* SimilarMovies.swift */; };
 		FBEC4CB2289423B00093D007 /* DesafioMobile2YouApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC4CB1289423B00093D007 /* DesafioMobile2YouApp.swift */; };
-		FBEC4CB4289423B00093D007 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC4CB3289423B00093D007 /* ContentView.swift */; };
 		FBEC4CB6289423B40093D007 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBEC4CB5289423B40093D007 /* Assets.xcassets */; };
 		FBEC4CB9289423B40093D007 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FBEC4CB8289423B40093D007 /* Preview Assets.xcassets */; };
+		FBEC4CC128942A530093D007 /* DetailMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC4CC028942A530093D007 /* DetailMovieView.swift */; };
+		FBEC4CDD28948C130093D007 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC4CDC28948C130093D007 /* DetailViewModel.swift */; };
+		FBEC4CE02894A5190093D007 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC4CDF2894A5190093D007 /* Enums.swift */; };
+		FBEC4CE72894A6380093D007 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC4CE62894A6380093D007 /* Movie.swift */; };
+		FBEC4CE92894BC860093D007 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEC4CE82894BC860093D007 /* Service.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB340FD828956FF00001ACDB /* SimilarMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarMovies.swift; sourceTree = "<group>"; };
 		FBEC4CAE289423B00093D007 /* DesafioMobile2You.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesafioMobile2You.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBEC4CB1289423B00093D007 /* DesafioMobile2YouApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesafioMobile2YouApp.swift; sourceTree = "<group>"; };
-		FBEC4CB3289423B00093D007 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FBEC4CB5289423B40093D007 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FBEC4CB8289423B40093D007 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FBEC4CC028942A530093D007 /* DetailMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieView.swift; sourceTree = "<group>"; };
+		FBEC4CDC28948C130093D007 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		FBEC4CDF2894A5190093D007 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		FBEC4CE62894A6380093D007 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		FBEC4CE82894BC860093D007 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +62,9 @@
 			isa = PBXGroup;
 			children = (
 				FBEC4CB1289423B00093D007 /* DesafioMobile2YouApp.swift */,
-				FBEC4CB3289423B00093D007 /* ContentView.swift */,
+				FBEC4CE12894A5B70093D007 /* Data */,
+				FBEC4CBF28942A320093D007 /* View */,
+				FBEC4CDE2894A5010093D007 /* Others */,
 				FBEC4CB5289423B40093D007 /* Assets.xcassets */,
 				FBEC4CB7289423B40093D007 /* Preview Content */,
 			);
@@ -65,6 +77,49 @@
 				FBEC4CB8289423B40093D007 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FBEC4CBF28942A320093D007 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FBEC4CC028942A530093D007 /* DetailMovieView.swift */,
+				FBEC4CDC28948C130093D007 /* DetailViewModel.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FBEC4CDE2894A5010093D007 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				FBEC4CDF2894A5190093D007 /* Enums.swift */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
+		FBEC4CE12894A5B70093D007 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				FBEC4CE32894A5DA0093D007 /* Model */,
+				FBEC4CE22894A5D50093D007 /* API */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		FBEC4CE22894A5D50093D007 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				FBEC4CE82894BC860093D007 /* Service.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		FBEC4CE32894A5DA0093D007 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FBEC4CE62894A6380093D007 /* Movie.swift */,
+				FB340FD828956FF00001ACDB /* SimilarMovies.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +192,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBEC4CB4289423B00093D007 /* ContentView.swift in Sources */,
+				FBEC4CC128942A530093D007 /* DetailMovieView.swift in Sources */,
+				FBEC4CE92894BC860093D007 /* Service.swift in Sources */,
+				FB340FD928956FF00001ACDB /* SimilarMovies.swift in Sources */,
+				FBEC4CDD28948C130093D007 /* DetailViewModel.swift in Sources */,
+				FBEC4CE72894A6380093D007 /* Movie.swift in Sources */,
+				FBEC4CE02894A5190093D007 /* Enums.swift in Sources */,
 				FBEC4CB2289423B00093D007 /* DesafioMobile2YouApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

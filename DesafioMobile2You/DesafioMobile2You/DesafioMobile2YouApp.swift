@@ -11,7 +11,8 @@ import SwiftUI
 struct DesafioMobile2YouApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DetailMovieView()
+                .environmentObject(DetailMovieViewModel())
         }
     }
 }
