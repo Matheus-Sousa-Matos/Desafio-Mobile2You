@@ -7,9 +7,6 @@
 
 import Foundation
 
-//Test Serialization JSON
-//let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
-
 class Service {
     
     static let shared = Service()

@@ -10,15 +10,9 @@ import Foundation
 class DetailMovieViewModel: ObservableObject {
     var movie = Movie()
     var movies: [Movie] = []
-    
+    private var similarMovies: [SimilarMovie] = []
     private var imgPath: String = "cover"
     private var idMovie: Int = 502
-    @Published var genres: [String] = []
-    var concat = ""
-    
-    var similarMovies: [SimilarMovie] = []
-    
-    var idSimilarMovie: Int = 0
     
     @Published var imgURLMovie: String = "https://image.tmdb.org/t/p/w300"
     @Published var titleMovie: String = "The Very Best Of Jonhnny Depp"

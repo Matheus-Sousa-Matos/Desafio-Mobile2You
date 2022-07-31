@@ -5,8 +5,6 @@
 //  Created by Matheus de Sousa Matos on 30/07/22.
 //
 
-import Foundation
-
 struct ResultSimilarMovie: Codable {
     var page: Int?
     var results: [SimilarMovie]

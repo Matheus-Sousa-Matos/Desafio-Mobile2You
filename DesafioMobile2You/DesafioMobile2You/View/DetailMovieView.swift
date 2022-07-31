@@ -20,11 +20,7 @@ struct DetailMovieView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     CoverImage()
                     VStack(alignment: .leading, spacing: 10){
-                        Details()
-//                        ForEach(viewModel.similarMovies, id: \.self) { similarMovie in
-//                            Card(similarMovie: similarMovie, genre: "Drama, Romance")
-//                        }
-                        
+                        Details(movie: viewModel.movie)
                         ForEach(viewModel.movies, id: \.self){ movie in
                             Card(similarMovie: movie)
                         }
@@ -34,9 +30,6 @@ struct DetailMovieView: View {
                 }
             }
             .ignoresSafeArea()
-        }
-        .onAppear{
-
         }
     }
 }
@@ -87,10 +80,11 @@ struct CoverImage: View{
 
 struct Details: View {
     @EnvironmentObject var viewModel: DetailMovieViewModel
+    var movie: Movie
     
     var body: some View {
         HStack(alignment:.top, spacing: 80) {
-            Text(viewModel.titleMovie)
+            Text(movie.title ?? "")
                 .font(
                     .title
                     .bold()
@@ -109,7 +103,7 @@ struct Details: View {
         
         HStack {
             Label {
-                Text("\(viewModel.​voteCount) Likes")
+                Text("\(movie.voteCount ?? 0) Likes")
                     .font(.caption)
                     .foregroundColor(Color(UIColor.lightGray))
             } icon: {
@@ -118,7 +112,7 @@ struct Details: View {
             }
             
             Label {
-                Text("\(viewModel.popularity)")
+                Text("\(movie.popularity ?? 0)")
                     .font(.caption)
                     .foregroundColor(Color(UIColor.lightGray))
             } icon: {
