@@ -15,9 +15,6 @@ class DetailMovieViewModel: ObservableObject {
     private var idMovie: Int = 502
     
     @Published var imgURLMovie: String = "https://image.tmdb.org/t/p/w300"
-    @Published var titleMovie: String = "The Very Best Of Jonhnny Depp"
-    @Published var ​voteCount: Int = 0
-    @Published var popularity: Double = 0.0
     
     //MARK: - Buttons
     @Published var favorited: Bool = false
@@ -43,14 +40,9 @@ class DetailMovieViewModel: ObservableObject {
                     print(data)
                     do {
                         self.movie =  try result.get()
-                        self.titleMovie = try result.get().title!
-                        self.​voteCount = try result.get().voteCount!
-                        self.popularity = try result.get().popularity!
-                        
                         //MARK: - Image
                         self.imgPath = try result.get().posterPath!
                         self.imgURLMovie = self.imgURLMovie + self.imgPath
-                        print("imgURLMovie: \(self.imgURLMovie)")
                         
                         self.movies.append(self.movie)
                         

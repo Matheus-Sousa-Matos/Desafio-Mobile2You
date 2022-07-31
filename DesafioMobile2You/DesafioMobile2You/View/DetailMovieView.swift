@@ -45,37 +45,30 @@ struct Background: View {
 
 struct CoverImage: View{
     @EnvironmentObject var viewModel: DetailMovieViewModel
-    @State var data: Data?
     
     var body: some View{
-        if let data = data, let uiImage = UIImage(data: data){
-            Image(uiImage: uiImage)
-                .resizable()
-                .frame(width: widthScreen, height: heightScreen*0.45)
-                .edgesIgnoringSafeArea([.top, .leading, .trailing])
-        }else{
-            Image("cover")
-                .resizable()
-                .frame(width: widthScreen, height: heightScreen*0.45)
-                .edgesIgnoringSafeArea([.top, .leading, .trailing])
-                .onAppear {
-                    DispatchQueue.main.async {
-                        fetchData()
-                    }
-                }
+        AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w300" + (viewModel.movie.posterPath ?? ""))) { phase in
+            switch phase {
+            case .empty:
+              ProgressView()
+            case .success(let returnedImage):
+                returnedImage
+                    .resizable()
+                    .frame(width: widthScreen, height: heightScreen*0.45)
+                    .edgesIgnoringSafeArea([.top, .leading, .trailing])
+            case .failure:
+                Image("cover")
+                    .resizable()
+                    .frame(width: widthScreen, height: heightScreen*0.45)
+                    .edgesIgnoringSafeArea([.top, .leading, .trailing])
+            default:
+                Image("cover")
+                    .resizable()
+                    .frame(width: widthScreen, height: heightScreen*0.45)
+                    .edgesIgnoringSafeArea([.top, .leading, .trailing])
+            }
         }
     }
-    
-    private func fetchData(){
-        guard let url = URL(string: viewModel.imgURLMovie) else{
-            return
-        }
-        let task = URLSession.shared.dataTask(with: url) { data, _, _ in
-            self.data = data
-        }
-        task.resume()
-    }
-    
 }
 
 struct Details: View {
@@ -84,6 +77,7 @@ struct Details: View {
     
     var body: some View {
         HStack(alignment:.top, spacing: 80) {
+            
             Text(movie.title ?? "")
                 .font(
                     .title
