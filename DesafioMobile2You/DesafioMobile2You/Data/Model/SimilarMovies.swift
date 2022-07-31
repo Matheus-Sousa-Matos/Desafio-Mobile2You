@@ -12,17 +12,6 @@ struct ResultSimilarMovie: Codable {
     var results: [SimilarMovie]
 }
 
-struct SimilarMovie: Hashable, Codable{
-    var title: String?
-    var posterPath: String?
-    var releaseDate: String?
-    var genreIds: [Int]?
-    
-    enum CodingKeys: String, CodingKey {
-        case title
-        case posterPath = "poster_path"
-        case releaseDate = "release_date"
-        case genreIds = "genre_ids"
-    }
-    
+struct SimilarMovie: Codable{
+    var id: Int?
 }

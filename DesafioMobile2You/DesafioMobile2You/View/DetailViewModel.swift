@@ -9,9 +9,16 @@ import Foundation
 
 class DetailMovieViewModel: ObservableObject {
     var movie = Movie()
+    var movies: [Movie] = []
+    
     private var imgPath: String = "cover"
+    private var idMovie: Int = 502
+    @Published var genres: [String] = []
+    var concat = ""
     
     var similarMovies: [SimilarMovie] = []
+    
+    var idSimilarMovie: Int = 0
     
     @Published var imgURLMovie: String = "https://image.tmdb.org/t/p/w300"
     @Published var titleMovie: String = "The Very Best Of Jonhnny Depp"
@@ -28,19 +35,19 @@ class DetailMovieViewModel: ObservableObject {
     //https://image.tmdb.org/t/p/w300/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg
     
     init(){
-        fetchMovieDetail()
+        fetchMovieDetail(idMovie: self.idMovie)
         fetchSimilarMovies()
     }
 
-    func fetchMovieDetail(){
-        Service.shared.getMovieDetail { result in
+    func fetchMovieDetail(idMovie: Int){
+        Service.shared.getMovieDetail(idMovie: idMovie) { result in
             DispatchQueue.main.async {
                 switch result {
                 case let .failure(error):
                     print(error)
                 case let .success(data):
                     print(data)
-                    do{
+                    do {
                         self.movie =  try result.get()
                         self.titleMovie = try result.get().title!
                         self.​voteCount = try result.get().voteCount!
@@ -50,7 +57,10 @@ class DetailMovieViewModel: ObservableObject {
                         self.imgPath = try result.get().posterPath!
                         self.imgURLMovie = self.imgURLMovie + self.imgPath
                         print("imgURLMovie: \(self.imgURLMovie)")
-                    }catch{
+                        
+                        self.movies.append(self.movie)
+                        
+                    } catch {
                         print(error.localizedDescription)
                     }
                 }
@@ -59,16 +69,22 @@ class DetailMovieViewModel: ObservableObject {
     }
     
     func fetchSimilarMovies(){
-        Service.shared.getSimilarMovies { movies in
+        Service.shared.getSimilarMovies(idMovie: self.idMovie) { movies in
             DispatchQueue.main.async {
                 switch movies {
                 case let .failure(error):
                     print(error)
                 case let .success(data):
                     print(data)
-                    do{
+                    do {
+                        //Pegar somente o id...
                         self.similarMovies = try movies.get().results
-                    }catch{
+                        
+                        for similarMovie in self.similarMovies {
+                            self.fetchMovieDetail(idMovie: similarMovie.id ?? 0)
+                        }
+                        
+                    } catch {
                         print(error.localizedDescription)
                     }
                 }
