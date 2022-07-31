@@ -10,27 +10,24 @@ import Foundation
 class DetailMovieViewModel: ObservableObject {
     var movie = Movie()
     var movies: [Movie] = []
+    
     private var similarMovies: [SimilarMovie] = []
     private var imgPath: String = "cover"
     private var idMovie: Int = 502
     
     @Published var imgURLMovie: String = "https://image.tmdb.org/t/p/w300"
-    
-    //MARK: - Buttons
     @Published var favorited: Bool = false
-    @Published var gender: String = "Drama, Fantasy"
     @Published var imgURLSimilarMovie: String = "https://image.tmdb.org/t/p/w300"
-
 
     //MARK: - Image Formatter  [Base Url + size + path]
     //https://image.tmdb.org/t/p/w300/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg
     
-    init(){
+    init() {
         fetchMovieDetail(idMovie: self.idMovie)
         fetchSimilarMovies()
     }
 
-    func fetchMovieDetail(idMovie: Int){
+    func fetchMovieDetail(idMovie: Int) {
         Service.shared.getMovieDetail(idMovie: idMovie) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -54,7 +51,7 @@ class DetailMovieViewModel: ObservableObject {
         }
     }
     
-    func fetchSimilarMovies(){
+    func fetchSimilarMovies() {
         Service.shared.getSimilarMovies(idMovie: self.idMovie) { movies in
             DispatchQueue.main.async {
                 switch movies {

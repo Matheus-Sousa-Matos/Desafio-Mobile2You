@@ -19,9 +19,9 @@ struct DetailMovieView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
                     CoverImage()
-                    VStack(alignment: .leading, spacing: 10){
+                    VStack(alignment: .leading, spacing: 10) {
                         Details(movie: viewModel.movie)
-                        ForEach(viewModel.movies, id: \.self){ movie in
+                        ForEach(viewModel.movies, id: \.self) { movie in
                             Card(similarMovie: movie)
                         }
                     }
@@ -43,10 +43,10 @@ struct Background: View {
     }
 }
 
-struct CoverImage: View{
+struct CoverImage: View {
     @EnvironmentObject var viewModel: DetailMovieViewModel
     
-    var body: some View{
+    var body: some View {
         AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w300" + (viewModel.movie.posterPath ?? ""))) { phase in
             switch phase {
             case .empty:
@@ -133,18 +133,16 @@ struct Card: View{
                         .font(.caption)
                         .foregroundColor(.white)
                     
-                    if similarMovie.genres?.count != 0 && similarMovie.genres?.count == 1{
+                    if similarMovie.genres?.count != 0 && similarMovie.genres?.count == 1 {
                         Text(" \(similarMovie.genres?[0].name ?? "") ")
                             .font(.caption)
                             .foregroundColor(Color(UIColor.lightGray))
                     }
-                    else if similarMovie.genres?.count != 0 && similarMovie.genres?.count ?? 0 >= 1{
+                    else if similarMovie.genres?.count != 0 && similarMovie.genres?.count ?? 0 >= 1 {
                         Text(" \(similarMovie.genres?[0].name ?? "") , \(similarMovie.genres?[1].name ?? "") ")
                             .font(.caption)
                             .foregroundColor(Color(UIColor.lightGray))
                     }
-                    
-                  
                 }
             }
             
@@ -157,17 +155,17 @@ struct Card: View{
     }
 }
 
-struct CardImage: View{
+struct CardImage: View {
     @EnvironmentObject var viewModel: DetailMovieViewModel
     @State var pathImage: String
     @State var data: Data?
     
-    var body: some View{
-        if let data = data, let uiImage = UIImage(data: data){
+    var body: some View {
+        if let data = data, let uiImage = UIImage(data: data) {
             Image(uiImage: uiImage)
                 .resizable()
                 .frame(width: 70, height: 90)
-        }else{
+        }else {
             Image("cover")
                 .resizable()
                 .frame(width: 70, height: 90)
@@ -180,8 +178,8 @@ struct CardImage: View{
         }
     }
     
-    private func fetchData(){
-        guard let url = URL(string: viewModel.imgURLSimilarMovie) else{
+    private func fetchData() {
+        guard let url = URL(string: viewModel.imgURLSimilarMovie) else {
             return
         }
         let task = URLSession.shared.dataTask(with: url) { data, _, _ in
@@ -189,5 +187,4 @@ struct CardImage: View{
         }
         task.resume()
     }
-    
 }

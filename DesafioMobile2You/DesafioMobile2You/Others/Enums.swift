@@ -5,7 +5,7 @@
 //  Created by Matheus de Sousa Matos on 29/07/22.
 //
 
-enum ServiceError: Error{
+enum ServiceError: Error {
     case invalidURL
     case decodeFail(Error?)
     case newtowrk(Error?)
