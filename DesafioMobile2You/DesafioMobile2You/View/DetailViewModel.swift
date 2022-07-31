@@ -11,35 +11,23 @@ class DetailMovieViewModel: ObservableObject {
     var movie = Movie()
     var movies: [Movie] = []
     
+    private var similarMovies: [SimilarMovie] = []
     private var imgPath: String = "cover"
     private var idMovie: Int = 502
-    @Published var genres: [String] = []
-    var concat = ""
-    
-    var similarMovies: [SimilarMovie] = []
-    
-    var idSimilarMovie: Int = 0
     
     @Published var imgURLMovie: String = "https://image.tmdb.org/t/p/w300"
-    @Published var titleMovie: String = "The Very Best Of Jonhnny Depp"
-    @Published var ​voteCount: Int = 0
-    @Published var popularity: Double = 0.0
-    
-    //MARK: - Buttons
     @Published var favorited: Bool = false
-    @Published var gender: String = "Drama, Fantasy"
     @Published var imgURLSimilarMovie: String = "https://image.tmdb.org/t/p/w300"
-
 
     //MARK: - Image Formatter  [Base Url + size + path]
     //https://image.tmdb.org/t/p/w300/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg
     
-    init(){
+    init() {
         fetchMovieDetail(idMovie: self.idMovie)
         fetchSimilarMovies()
     }
 
-    func fetchMovieDetail(idMovie: Int){
+    func fetchMovieDetail(idMovie: Int) {
         Service.shared.getMovieDetail(idMovie: idMovie) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -49,17 +37,10 @@ class DetailMovieViewModel: ObservableObject {
                     print(data)
                     do {
                         self.movie =  try result.get()
-                        self.titleMovie = try result.get().title!
-                        self.​voteCount = try result.get().voteCount!
-                        self.popularity = try result.get().popularity!
-                        
-                        //MARK: - Image
+                        //MARK: - Formatter url image
                         self.imgPath = try result.get().posterPath!
                         self.imgURLMovie = self.imgURLMovie + self.imgPath
-                        print("imgURLMovie: \(self.imgURLMovie)")
-                        
                         self.movies.append(self.movie)
-                        
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -68,7 +49,7 @@ class DetailMovieViewModel: ObservableObject {
         }
     }
     
-    func fetchSimilarMovies(){
+    func fetchSimilarMovies() {
         Service.shared.getSimilarMovies(idMovie: self.idMovie) { movies in
             DispatchQueue.main.async {
                 switch movies {
@@ -77,13 +58,10 @@ class DetailMovieViewModel: ObservableObject {
                 case let .success(data):
                     print(data)
                     do {
-                        //Pegar somente o id...
                         self.similarMovies = try movies.get().results
-                        
                         for similarMovie in self.similarMovies {
                             self.fetchMovieDetail(idMovie: similarMovie.id ?? 0)
                         }
-                        
                     } catch {
                         print(error.localizedDescription)
                     }

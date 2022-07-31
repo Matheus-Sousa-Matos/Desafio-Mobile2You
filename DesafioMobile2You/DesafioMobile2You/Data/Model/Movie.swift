@@ -5,9 +5,6 @@
 //  Created by Matheus de Sousa Matos on 29/07/22.
 //
 
-import Foundation
-
-//MARK: - Data
 struct Movie: Codable, Identifiable, Hashable {
     var id: Int?
     var popularity: Double?
@@ -29,7 +26,7 @@ struct Movie: Codable, Identifiable, Hashable {
     
 }
 
-struct Genres: Codable, Identifiable, Hashable{
+struct Genres: Codable, Identifiable, Hashable {
     var id: Int
     var name: String
 }
