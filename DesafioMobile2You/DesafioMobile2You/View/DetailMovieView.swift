@@ -21,18 +21,22 @@ struct DetailMovieView: View {
                     CoverImage()
                     VStack(alignment: .leading, spacing: 10){
                         Details()
-                        ForEach(viewModel.similarMovies, id: \.self) { similarMovie in
-                            //Text(similarMovie.title ?? "")
-                              //  .foregroundColor(Color.white)
-                            Card(similarMovie: similarMovie)
-                        }
+//                        ForEach(viewModel.similarMovies, id: \.self) { similarMovie in
+//                            Card(similarMovie: similarMovie, genre: "Drama, Romance")
+//                        }
                         
+                        ForEach(viewModel.movies, id: \.self){ movie in
+                            Card(similarMovie: movie)
+                        }
                     }
                     .padding(.leading, 2)
                     .padding(.trailing, 2)
                 }
             }
             .ignoresSafeArea()
+        }
+        .onAppear{
+
         }
     }
 }
@@ -92,7 +96,8 @@ struct Details: View {
                     .bold()
                 )
                 .foregroundColor(.white)
-                .padding(.trailing, 60)
+            
+            Spacer()
             
             Button {
                 viewModel.favorited.toggle()
@@ -111,11 +116,9 @@ struct Details: View {
                 Image(systemName: "heart.fill")
                     .foregroundColor(Color.white)
             }
-
-            //Substituir o 32 pela quantidade de filmes similares...
             
             Label {
-                Text("\(viewModel.popularity) of 32 Watched")
+                Text("\(viewModel.popularity)")
                     .font(.caption)
                     .foregroundColor(Color(UIColor.lightGray))
             } icon: {
@@ -128,7 +131,7 @@ struct Details: View {
 }
 
 struct Card: View{
-    var similarMovie: SimilarMovie
+    var similarMovie: Movie
     
     var body: some View{
         HStack(alignment: .center, spacing: 15) {
@@ -141,9 +144,19 @@ struct Card: View{
                     Text(similarMovie.releaseDate ?? "")
                         .font(.caption)
                         .foregroundColor(.white)
-                    Text("Romance")
-                        .font(.caption)
-                        .foregroundColor(Color(UIColor.lightGray))
+                    
+                    if similarMovie.genres?.count != 0 && similarMovie.genres?.count == 1{
+                        Text(" \(similarMovie.genres?[0].name ?? "") ")
+                            .font(.caption)
+                            .foregroundColor(Color(UIColor.lightGray))
+                    }
+                    else if similarMovie.genres?.count != 0 && similarMovie.genres?.count ?? 0 >= 1{
+                        Text(" \(similarMovie.genres?[0].name ?? "") , \(similarMovie.genres?[1].name ?? "") ")
+                            .font(.caption)
+                            .foregroundColor(Color(UIColor.lightGray))
+                    }
+                    
+                  
                 }
             }
             
@@ -153,8 +166,6 @@ struct Card: View{
                 .foregroundColor(.white)
                 .padding(.bottom, 50)
         }
-        
-       
     }
 }
 

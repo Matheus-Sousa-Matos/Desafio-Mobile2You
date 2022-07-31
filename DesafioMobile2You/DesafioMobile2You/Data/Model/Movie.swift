@@ -8,12 +8,13 @@
 import Foundation
 
 //MARK: - Data
-struct Movie: Codable, Identifiable {
+struct Movie: Codable, Identifiable, Hashable {
     var id: Int?
     var popularity: Double?
     var posterPath: String?
     var title: String?
     var voteCount: Int?
+    var releaseDate: String?
     var genres: [Genres]?
     
     enum CodingKeys: String, CodingKey {
@@ -21,13 +22,14 @@ struct Movie: Codable, Identifiable {
         case popularity
         case posterPath = "poster_path"
         case title
+        case releaseDate = "release_date"
         case voteCount = "vote_count"
         case genres
     }
     
 }
 
-struct Genres: Codable, Identifiable{
+struct Genres: Codable, Identifiable, Hashable{
     var id: Int
     var name: String
 }

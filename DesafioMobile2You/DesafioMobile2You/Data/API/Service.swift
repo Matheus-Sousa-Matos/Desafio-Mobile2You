@@ -14,15 +14,15 @@ class Service {
     
     static let shared = Service()
     private let APIKey = "e83c363f0e18ccc591a2bbb0dbd92261"
-    private let baseURL = "https://api.themoviedb.org/3/movie/550"
+    private let baseURL = "https://api.themoviedb.org/3/movie/"
     
     //MARK: - URLs
     //Note: 550 is static movie case change movie use var value or pass another value. Ex: 501
     //https://api.themoviedb.org/3/movie/550?api_key=e83c363f0e18ccc591a2bbb0dbd92261&language=en-US
     //https://api.themoviedb.org/3/movie/550x/similar?api_key=e83c363f0e18ccc591a2bbb0dbd92261&language=en-US&page=1
     
-    func getMovieDetail(callback: @escaping (Result<Movie, ServiceError>) -> ()) {
-        guard let url = URL(string: "\(baseURL)?api_key=\(APIKey)&language=en-US") else {
+    func getMovieDetail(idMovie: Int, callback: @escaping (Result<Movie, ServiceError>) -> ()) {
+        guard let url = URL(string: "\(baseURL)\(idMovie)?api_key=\(APIKey)&language=en-US") else {
             callback(.failure(.invalidURL))
             return
         }
@@ -43,8 +43,8 @@ class Service {
         task.resume()
     }
     
-    func getSimilarMovies(callback: @escaping (Result<ResultSimilarMovie, ServiceError>) -> ()) {
-        guard let url = URL(string: "\(baseURL)x/similar?api_key=\(APIKey)&language=en-US&page=1") else {
+    func getSimilarMovies(idMovie: Int, callback: @escaping (Result<ResultSimilarMovie, ServiceError>) -> ()) {
+        guard let url = URL(string: "\(baseURL)\(idMovie)x/similar?api_key=\(APIKey)&language=en-US&page=1") else {
             callback(.failure(.invalidURL))
             return
         }
